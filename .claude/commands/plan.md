@@ -1,13 +1,21 @@
 Susun rencana kerja detail untuk tugas berikut: $ARGUMENTS
 
-Rencana harus mencakup:
-- File apa saja yang akan dibuat atau diubah (dengan path lengkap)
-- Isi tiap file: class, method, struktur data
-- Urutan pengerjaan yang aman (dari yang tidak punya dependency dulu)
-- Edge case yang perlu dihandle
-- Test minimal yang perlu ditulis
+Sebelum mulai: muat `.harness/prompts/_preamble.md` (advisor-only, R900)
+dan cek `docs/DECISIONS.md` (ADR terkunci).
 
-Pastikan rencana tidak bertabrakan dengan keputusan terkunci di docs/DECISIONS.md.
-Jangan tulis kode implementasi dulu. Hanya rencana.
-Tunggu konfirmasi "lanjutkan" atau "approve" sebelum melanjutkan ke eksekusi.
-Sampaikan dalam Bahasa Indonesia.
+Rencana harus mencakup:
+- File yang dibuat/diubah (path lengkap) + ZONA tiap file: doc
+  (auto-edit, R900.8) atau runtime (advisor-only, R900.9)
+- Isi tiap file: class, method, struktur data
+- Urutan pengerjaan aman (yang tanpa dependency dulu)
+- Rule R### & ADR-### yang relevan tiap langkah
+- Edge case yang perlu dihandle
+- Test minimal (R300)
+- Verify: perintah persis + hasil yang diharapkan
+
+Aturan:
+- Jangan tulis kode implementasi (hanya rencana); kode = advisor-only.
+- Pastikan tidak bertabrakan dengan ADR di `docs/DECISIONS.md`.
+- Simpan plan final ke `docs/plans/<slug>.md` sebelum eksekusi.
+- Tunggu approval sebelum lanjut ke eksekusi.
+- Sampaikan dalam Bahasa Indonesia.

@@ -43,3 +43,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Claude Code personal overrides
+.claude/settings.local.json
+
+# Env dev
+.env
+.env.local
+
+# FlutterFire artefacts (kalau nanti dipakai)
+firebase-debug.log
+.firebase/
+
+# learning_docs = repo private terpisah (ADR-018)
+learning_docs/
