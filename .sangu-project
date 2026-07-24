@@ -1,0 +1,9 @@
+# .sangu-project — Penanda project untuk skrip ber-scope Sangu.
+# JANGAN HAPUS. Dipakai helper (mis. scripts/sangu-push.sh) untuk
+# memverifikasi bahwa perintah dijalankan di dalam project Sangu.
+
+name: sangu
+version: 1
+main_repo: sangu-app
+learning_repo: sangu-learning-docs
+created: 2026-07-24
