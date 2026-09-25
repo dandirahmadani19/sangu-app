@@ -55,5 +55,10 @@ app.*.map.json
 firebase-debug.log
 .firebase/
 
+# Firebase config sensitif (T-009, ADR-007) — jangan commit ke repo public
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+
 # learning_docs = repo private terpisah (ADR-018)
 learning_docs/
