@@ -16,13 +16,13 @@ dengan `/session-end` (update file ini). Model apa pun bisa lanjut.
 
 ## Current Task
 
-**Next up: T-004 — Folder skeleton feature-first + `main.dart` placeholder.**
+**Next up: T-005 — `lefthook.yml` pre-commit gate.**
 
-- Deps: T-003 (pubspec dependency inti) — **selesai**
+- Deps: T-004 (folder skeleton + main.dart placeholder) — **selesai**
 - Est: S · Zona: runtime (advisor-only — agent usul, developer eksekusi)
 - Spec penuh: `docs/MVP.md#M0`
 
-Setelah T-004: T-005 (lefthook.yml pre-commit gate).
+Setelah T-005: T-006 (CI GitHub Actions).
 
 ## Blocker
 
@@ -37,6 +37,20 @@ Setelah T-004: T-005 (lefthook.yml pre-commit gate).
 
 Format: tanggal + tujuan singkat; task disentuh (✓ selesai, ~ in-progress,
 ! blocked); learning/keputusan; next action. Terbaru di atas.
+
+### 2026-09-25 — T-004: folder skeleton + main.dart placeholder
+
+- **T-004 ✓** — `lib/main.dart` diganti dari template counter default →
+  `SanguApp` (root widget, `ProviderScope` dibungkus di `runApp`, siap
+  Riverpod untuk T-012/T-013). `test/widget_test.dart` diganti smoke
+  test placeholder (R100.13, R100.11, ADR-001, ADR-002). 17 folder
+  skeleton (`lib/core/{db,ai,router,theme,utils}`, `lib/shared/widgets`,
+  `lib/features/{dashboard,transactions,receipts,insights,gamification}/
+  {presentation,data}`) dibuat sesuai `docs/ARCHITECTURE.md`, ditandai
+  `.gitkeep`.
+- Verifikasi: `flutter analyze` → 0 issues (6 info sebelumnya di
+  `main.dart` template hilang total). `flutter test` → 1/1 passed.
+- **Next:** commit T-004, lalu T-005 (`lefthook.yml` pre-commit gate).
 
 ### 2026-09-24 — Fix `flutter doctor`/`pub` permission + T-002
 
