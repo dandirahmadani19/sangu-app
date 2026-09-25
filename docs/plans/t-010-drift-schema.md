@@ -1,7 +1,6 @@
 # Plan — T-010: Skema Drift (Transaction, Category, SubCategory)
 
-**Status:** DRAFT — menunggu eksekusi developer (proposal sudah
-dikeluarkan di sesi, belum di-apply).
+**Status:** SELESAI — dieksekusi & commit `9d06339` (2026-09-25).
 **Rule dasar:** R900 (advisor-only), R100.2/.3/.9/.12/.13, R300.1/.5,
 ADR-003.
 **Spec asal:** `docs/MVP.md#T-010` (Deps: T-004 ✓ · Est: M ·

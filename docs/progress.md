@@ -21,9 +21,9 @@ manual**.
 
 ## Current Task
 
-**Next up: T-010 — Skema Drift: Transaction, Category, SubCategory.**
+**Next up: T-011 — Seed taksonomi kategori (dari `ARCHITECTURE.md`).**
 
-- Deps: T-004 (selesai) · Est: M · AC-F1.1/1.4
+- Deps: T-010 (selesai) · Est: S · AC-F1.4
 - Zona: runtime (advisor-only — agent usul, developer eksekusi)
 - Spec penuh: `docs/MVP.md#M1`
 
@@ -41,6 +41,38 @@ manual**.
 
 Format: tanggal + tujuan singkat; task disentuh (✓ selesai, ~ in-progress,
 ! blocked); learning/keputusan; next action. Terbaru di atas.
+
+### 2026-09-25 — T-010 ✓: Skema Drift Transaction & Category
+
+- **T-010 ✓** — `lib/core/db/tables.dart`: tabel `Transactions` &
+  `Categories` (`Categories.parentId` self-reference nullable
+  merepresentasikan Category *dan* SubCategory dalam satu tabel —
+  `parentId == null` → kategori induk, terisi → subkategori; keputusan
+  ini didiskusikan & dikonfirmasi developer sebelum eksekusi). Uang
+  `int` Rupiah (R100.3), enum `TransactionType`/`TransactionSource`
+  lewat `textEnum<T>()` (drift). `lib/core/db/database.dart`:
+  `AppDatabase` (`@DriftDatabase`), koneksi `drift_flutter`,
+  `schemaVersion = 1`.
+- `test/core/db/database_test.dart`: smoke test insert/select
+  (kategori induk+subkategori, transaksi dengan default `subCategory`
+  "Lainnya") — 2/2 passed.
+- **Insiden kecil saat eksekusi:** (1) `flutter analyze` awalnya 30
+  info `public_member_api_docs` (very_good_analysis) — semua public
+  member butuh doc comment `///`, diperbaiki lewat proposal susulan,
+  hasil akhir `flutter analyze` → **No issues found!**. (2) test
+  gagal compile `Couldn't find constructor 'Value'` — lupa
+  `import 'package:drift/drift.dart'` di file test, fix 1 baris.
+- **Diskusi desain (sebelum eksekusi):** developer tunjukkan referensi
+  UI app lain (kategori 1-level flat chip). Disepakati **Opsi A**:
+  skema tetap taksonomi 2-level (`category`+`subCategory`), UX form
+  manual nanti (T-014) progresif (pilih kategori dulu → chip
+  subkategori muncul) — dicatat di
+  `docs/plans/t-010-drift-schema.md#6` sebagai acuan wajib T-014,
+  supaya tidak didesain ulang dari nol.
+- Commit: `9d06339` — `feat(db): tambah skema Drift Transaction &
+  Category (T-010)`.
+- **Next:** T-011 (seed taksonomi kategori dari `ARCHITECTURE.md`
+  baris 131-144, insert ke tabel `Categories` yang baru dibuat).
 
 ### 2026-09-25 — T-009 ✓: Firebase + App Check + Gemini "hello" test
 
