@@ -197,11 +197,14 @@ Fondasi. **Dirinci penuh.** Sebagian sudah/akan dieksekusi via
 - Rules: ADR-018
 - Verify: `cd learning_docs && git status` = repo sendiri; repo utama tak melacaknya.
 
-### T-009: Setup Firebase + App Check + firebase_ai, tes "hello" Gemini
+### T-009 ✓: Setup Firebase + App Check + firebase_ai, tes "hello" Gemini
 - Deps: T-003 · Est: M · Zona: runtime (setup eksternal)
 - Files: `firebase_options.dart` (gitignore bila sensitif), `lib/core/ai/**`
 - Rules: R400.1, R400.2, R500.7, ADR-007
 - Verify: panggilan "hello" ke Gemini berhasil dengan App Check aktif.
+  **Selesai 2026-09-25** — tes manual di device Android fisik, balasan
+  "Halo" diterima. Scope: Android saja (iOS terdaftar di Firebase tapi
+  belum di-setup lanjut, lihat `docs/progress.md`).
 
 ---
 

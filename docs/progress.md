@@ -6,26 +6,26 @@ dengan `/session-end` (update file ini). Model apa pun bisa lanjut.
 
 ## Current Phase
 
-**M0 — Setup & Harness** (sedang berjalan).
+**M0 — Setup & Harness: SELESAI.** Mulai **M1 — Data & transaksi
+manual**.
 
 - Harness governance (`.harness/` + migrasi ADR/T-###): **hampir selesai**
   (lihat `docs/plans/adopt-contractiq-harness.md`).
 - Bootstrap Flutter (`analysis_options`, `pubspec`, folder, lefthook,
-  CI): **belum** (lihat `docs/plans/week-0-setup-harness.md`).
-- Health: CI belum ada (project Flutter belum di-bootstrap).
+  CI): **selesai** (T-001..T-008 semua ✓; lihat
+  `docs/plans/week-0-setup-harness.md`).
+- Firebase + AI (T-009): **selesai** — App Check + Remote Config +
+  `firebase_ai` jalan end-to-end di device Android fisik.
+- Health: CI hijau, repo public, `learning_docs/` terpisah OK, Gemini
+  "hello" test sukses.
 
 ## Current Task
 
-**Next up: T-006 — CI GitHub Actions.**
+**Next up: T-010 — Skema Drift: Transaction, Category, SubCategory.**
 
-- Deps: T-005 (lefthook.yml pre-commit gate) — **selesai**
-- Est: S · Zona: runtime (advisor-only — agent usul, developer eksekusi)
-- Spec penuh: `docs/MVP.md#M0`
-
-Setelah T-006: T-007 (verifikasi repo GitHub — remote `origin` sudah
-ada & push jalan sejak T-002, tinggal cek visibility private + CI
-hijau setelah T-006) → T-008 (learning_docs repo terpisah, sisa dari
-T-001, belum dicek statusnya).
+- Deps: T-004 (selesai) · Est: M · AC-F1.1/1.4
+- Zona: runtime (advisor-only — agent usul, developer eksekusi)
+- Spec penuh: `docs/MVP.md#M1`
 
 ## Blocker
 
@@ -34,12 +34,84 @@ T-001, belum dicek statusnya).
 ## Keputusan pending
 
 - Lihat "Pertanyaan terbuka" di `docs/DECISIONS.md` (hex warna, font,
-  daftar badge, nama model Gemini).
+  daftar badge). Nama model Gemini **sudah ditutup** (T-009):
+  `gemini-3.8-flash`.
 
 ## Session Log
 
 Format: tanggal + tujuan singkat; task disentuh (✓ selesai, ~ in-progress,
 ! blocked); learning/keputusan; next action. Terbaru di atas.
+
+### 2026-09-25 — T-009 ✓: Firebase + App Check + Gemini "hello" test
+
+- **T-009 ✓ — M0 resmi tuntas (T-001..T-009 semua ✓).**
+- ⚠ **R900 ditangguhkan** untuk task ini atas permintaan eksplisit
+  developer ("eksekusi langsung saja") — agent (Claude) edit file
+  runtime langsung tanpa proposal per-batch, sesuai R900.5/R900.6.
+  Aktif normal lagi setelah entri ini.
+- Setup: project Firebase `sangu-app-86914` (Spark/gratis), Firebase AI
+  Logic dengan backend **Gemini Developer API** (bukan Vertex AI —
+  hindari wajib billing). `flutterfire configure` dijalankan developer
+  untuk **android + ios** sekaligus (di luar kesepakatan awal
+  "Android saja") — diputuskan: biarkan file iOS terdaftar, tapi
+  **skip setup lanjutan iOS** (tidak ada init/App Check iOS di kode);
+  jadi task susulan kalau dibutuhkan.
+- Dependency baru (`flutter pub add`): `firebase_core`, `firebase_ai`,
+  `firebase_app_check`, `firebase_remote_config` (ADR-007).
+- File baru: `lib/core/ai/gemini_client.dart` (`GeminiClient`, ambil
+  nama model dari Remote Config key `gemini_model_name`, R500.7,
+  fallback lokal `gemini-3.8-flash` kalau fetch gagal — fail closed,
+  R400.6). `test/core/ai/gemini_client_test.dart` — test logika murni
+  `resolveModelName`, **tidak memanggil Gemini asli** (R300.8).
+- `lib/main.dart`: `Firebase.initializeApp` + `FirebaseAppCheck.instance
+  .activate(providerAndroid: AndroidDebugProvider())` sebelum
+  `runApp`. Sempat pakai API lama `androidProvider` (deprecated,
+  ketahuan dari `flutter analyze`) — diganti ke `providerAndroid:
+  AndroidDebugProvider()`.
+- `.gitignore`: tambah `android/app/google-services.json`,
+  `ios/Runner/GoogleService-Info.plist`, `lib/firebase_options.dart`
+  (R400.1) — dikonfirmasi `git status` tidak melacaknya setelah
+  `flutterfire configure` generate file-file itu.
+- **Insiden App Check debug token:** panggilan pertama gagal —
+  `DebugAppCheckProvider: Failed to exchange debug token` karena token
+  belum didaftarkan di console. Fix: developer daftarkan debug token
+  (dari log `flutter run`) ke **App Check → Manage debug tokens**.
+  Setelah itu panggilan sukses.
+- **Verifikasi end-to-end:** developer tes manual pakai tombol debug
+  sementara ("Test Gemini", dihapus lagi setelah verifikasi) di device
+  Android fisik (emulator gagal boot di sandbox agent — limitasi
+  environment, bukan kode). Balasan Gemini **"Halo"** diterima.
+- **Catatan quota:** hit tombol berkali-kali cepat → error "exceeded
+  quota" + kadang 500 transient — ini normal untuk **free tier Gemini
+  Developer API** (RPM/RPD ketat di Spark plan), bukan bug. Handling
+  quota yang lebih matang (retry terbatas, R500.8) ditunda ke task
+  fitur AI sungguhan (insight mingguan/OCR), bukan scope T-009.
+- Pertanyaan terbuka "Nama model Gemini spesifik" di `docs/DECISIONS.md`
+  **ditutup**: `gemini-3.8-flash`.
+- **Next:** M1 dimulai — T-010 (skema Drift: Transaction, Category,
+  SubCategory).
+
+### 2026-09-25 — T-008 ✓ verifikasi: learning_docs repo terpisah
+
+- **T-008 ✓** — `learning_docs/` sudah repo git sendiri, remote
+  `origin` → `sangu-learning-docs.git`, status clean. `.gitignore`
+  repo utama sudah punya entry `learning_docs/` (ADR-018) — dikonfirmasi
+  `git ls-files` repo utama tidak melacak isinya.
+- **M0 selesai (T-001..T-008 semua ✓).**
+- **Next:** T-009 (Firebase + App Check + firebase_ai, tes "hello"
+  Gemini) — awal M1, zona runtime setup eksternal, hati-hati R400.1
+  karena repo public.
+
+### 2026-09-25 — T-006 ✓ + T-007 terverifikasi (CI hijau)
+
+- **T-006 ✓** — `.github/workflows/ci.yml` (pub get → build_runner →
+  analyze → test), R300.7, ADR-014. Sempat 1 kali gagal (`[FAIL]` run
+  `36087087671`) karena nesting `on`/`jobs` salah, diperbaiki commit
+  `8755185`.
+- **T-007 ✓ (verifikasi)** — run CI berikutnya (`36087809986`) `[ok]`.
+  Kondisi verify T-007 (repo public ada + CI hijau pada push pertama
+  setelah T-006) terpenuhi.
+- **Next:** T-008 (learning_docs repo terpisah, sisa dari T-001).
 
 ### 2026-09-25 — ADR-019: repo GitHub public (bukan private)
 

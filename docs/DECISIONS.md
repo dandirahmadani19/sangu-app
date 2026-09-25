@@ -338,7 +338,7 @@ ADR-016. Backend proxy NestJS → ADR-007.
 | Hex warna final (light & dark) | Ditentukan saat implementasi UI (M2/M6). Arah: warm-earthy (ADR-010) |
 | Font spesifik (headline & body) | Pilih saat M2. Syarat: editorial, ada tabular figures (R602.3) |
 | Daftar badge gamifikasi final | Rancang saat M2 (mulai 3–5 badge) (ADR-011) |
-| Nama model Gemini spesifik | Cek Firebase console saat M0; simpan di Remote Config (R500.7) |
+| Nama model Gemini spesifik | **Ditutup 2026-09-25 (T-009):** `gemini-3.8-flash`, disimpan di Remote Config key `gemini_model_name` (R500.7) |
 
 Taksonomi kategori bersifat **soft** (mudah diubah di
 `ARCHITECTURE.md`), bukan keputusan terkunci keras.
