@@ -37,6 +37,7 @@ ID-nya (`ADR-###`) di komentar kode, pesan commit, dan file rule.
 | ADR-016  | Strategi model: agnostik                                 | Accepted |
 | ADR-017  | Adopsi `.harness/` + doc-zone auto-edit (R900)           | Accepted |
 | ADR-018  | learning_docs sebagai repo private terpisah              | Accepted |
+| ADR-019  | Repo utama GitHub: public                                | Accepted |
 
 **Superseded:** D-18, D-19 (dual-model Claude/DeepSeek terkunci) →
 ADR-016. Backend proxy NestJS → ADR-007.
@@ -302,6 +303,31 @@ ADR-016. Backend proxy NestJS → ADR-007.
 - **Consequences.** (+) Portfolio bersih + belajar mendalam. (−) Dua
   repo untuk dikelola (dibantu helper push).
 - **Change control.** ADR baru bila menggabung/menghapus.
+
+## ADR-019 — Repo utama GitHub: public
+**Status:** Accepted · 2026-09-25 · **Supersedes** bagian "private" di T-007 (`docs/MVP.md`)
+
+- **Context.** T-007 awalnya menyebut repo utama di-push sebagai
+  **private**. Saat pengecekan T-006 (CI), repo ternyata sudah
+  **public** sejak awal push.
+- **Options considered.** (a) Ubah jadi private sesuai spec asli;
+  (b) biarkan public, update spec — selaras tujuan Sangu sebagai
+  portfolio utama (CLAUDE.md: "portfolio utama untuk lamaran AI-native
+  full-stack").
+- **Decision.** Ambil (b). Repo utama `sangu-app` tetap **public**.
+- **Rationale.** Salah satu dari empat tujuan Sangu adalah portfolio
+  yang bisa ditunjukkan langsung (bukan cuma deskripsi) ke calon
+  pemberi kerja — repo public mendukung itu tanpa friksi akses.
+  Kredensial sensitif (Firebase config, API key) tetap **tidak boleh**
+  ikut ter-commit (R400.1) — itu digovern terpisah, bukan oleh
+  visibility repo.
+- **Consequences.** (+) Mudah dibagikan sebagai portfolio, tanpa perlu
+  invite akses. (−) Kode & histori commit (termasuk pesan commit)
+  terlihat publik — perlu disiplin ekstra jangan pernah commit secret
+  (R400.1, `.gitignore` untuk `.env*`/`firebase_options.dart` bila
+  sensitif, ADR-007).
+- **Change control.** ADR baru bila kembali ke private (mis. karena
+  butuh menyembunyikan logika bisnis tertentu).
 
 ---
 

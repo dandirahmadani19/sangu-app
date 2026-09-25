@@ -41,6 +41,22 @@ T-001, belum dicek statusnya).
 Format: tanggal + tujuan singkat; task disentuh (✓ selesai, ~ in-progress,
 ! blocked); learning/keputusan; next action. Terbaru di atas.
 
+### 2026-09-25 — ADR-019: repo GitHub public (bukan private)
+
+- **Konflik ditemukan** saat cek repo sebelum T-006: `gh repo view`
+  → `sangu-app` sudah **PUBLIC**, padahal spec T-007 lama minta
+  private. STOP condition (R000.3) → tanya developer.
+- **Keputusan developer:** biarkan public, update spec (bukan ubah ke
+  private). Alasan: salah satu tujuan Sangu adalah portfolio yang bisa
+  dibagikan langsung (`CLAUDE.md`).
+- **ADR-019 ✓** ditambah ke `docs/DECISIONS.md` (supersede bagian
+  "private" di T-007). `docs/MVP.md` T-007 diupdate: "public", cite
+  ADR-019.
+- **Catatan penting ke depan:** karena repo public, disiplin R400.1
+  (jangan commit kredensial) jadi lebih kritis — relevan mulai T-009
+  (Firebase setup).
+- **Next:** commit ADR-019 + MVP.md, lalu T-006 (CI GitHub Actions).
+
 ### 2026-09-25 — T-005: lefthook.yml + insiden pelanggaran R900
 
 - **T-005 ✓** — `lefthook.yml`: hook `pre-commit` (format → analyze →

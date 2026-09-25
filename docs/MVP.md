@@ -184,11 +184,12 @@ Fondasi. **Dirinci penuh.** Sebagian sudah/akan dieksekusi via
 - Rules: R300.7, ADR-014
 - Verify: push → CI hijau (pub get, build_runner, analyze, test).
 
-### T-007: Push repo utama ke GitHub (private)
+### T-007: Push repo utama ke GitHub (public)
 - Deps: T-006 · Est: S · Zona: runtime (aksi developer)
 - Files: — (git remote)
-- Rules: R200, R900.1
-- Verify: repo private ada; CI hijau pada push pertama.
+- Rules: R200, R900.1, ADR-019
+- Verify: repo public ada (dikonfirmasi 2026-09-25); CI hijau pada
+  push pertama setelah T-006.
 
 ### T-008: learning_docs repo private terpisah
 - Deps: T-001 · Est: M · Zona: doc + aksi git developer
