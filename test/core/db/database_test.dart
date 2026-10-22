@@ -37,7 +37,8 @@ void main() {
         );
 
     final rows = await db.select(db.categories).get();
-    expect(rows, hasLength(2));
+    // DB sudah ter-seed (T-011), jadi cek baris yang kita insert saja.
+    expect(rows.map((r) => r.id), containsAll(['cat_transport', 'cat_bensin']));
     expect(
       rows.firstWhere((r) => r.id == 'cat_bensin').parentId,
       'cat_transport',

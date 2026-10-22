@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
+import 'package:sangu/core/db/category_seed.dart';
 import 'package:sangu/core/db/tables.dart';
 
 part 'database.g.dart';
@@ -18,8 +19,12 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 
   @override
-  MigrationStrategy get migration =>
-      MigrationStrategy(onCreate: (migrator) => migrator.createAll());
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (migrator) async {
+      await migrator.createAll();
+      await seedCategories(this);
+    },
+  );
 
   static QueryExecutor _openConnection() {
     return driftDatabase(name: 'sangu_db');
