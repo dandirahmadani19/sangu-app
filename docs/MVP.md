@@ -224,7 +224,7 @@ punya fondasi data keuangan.
 
 **Tasks (shape ringkas, dimatangkan saat M1 didekati):**
 - [x] **T-010** Skema Drift: Transaction, Category, SubCategory — Deps T-004 · M · AC-F1.1/1.4
-- [ ] **T-011** Seed taksonomi kategori (dari `ARCHITECTURE.md`) — Deps T-010 · S · AC-F1.4
+- [x] **T-011** Seed taksonomi kategori (dari `ARCHITECTURE.md`) — Deps T-010 · S · AC-F1.4
 - [ ] **T-012** Repository transaksi (pintu tunggal ke Drift) — Deps T-010 · M · R100.11
 - [ ] **T-013** Riverpod provider/Notifier transaksi — Deps T-012 · M · R100.11
 - [ ] **T-014** Form input manual lengkap + validasi — Deps T-013 · L · AC-F1.1/1.5

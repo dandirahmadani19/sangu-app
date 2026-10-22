@@ -21,11 +21,13 @@ manual**.
 
 ## Current Task
 
-**Next up: T-011 — Seed taksonomi kategori (dari `ARCHITECTURE.md`).**
+**Next up: T-012 — Repository transaksi (pintu tunggal ke Drift).**
 
-- Deps: T-010 (selesai) · Est: S · AC-F1.4
+- Deps: T-010 (selesai) · Est: M · R100.11
 - Zona: runtime (advisor-only — agent usul, developer eksekusi)
 - Spec penuh: `docs/MVP.md#M1`
+- Setelah itu: T-013 (provider Riverpod) → T-014 (form manual, ikuti
+  UX progresif di `docs/plans/t-010-drift-schema.md#6`).
 
 ## Blocker
 
@@ -41,6 +43,30 @@ manual**.
 
 Format: tanggal + tujuan singkat; task disentuh (✓ selesai, ~ in-progress,
 ! blocked); learning/keputusan; next action. Terbaru di atas.
+
+### 2026-10-22 — T-011 ✓: Seed taksonomi kategori
+
+- **T-011 ✓** — `lib/core/db/category_seed.dart`: `seedCategories(db)`
+  mengisi kategori induk + subkategori default (73 baris; id
+  deterministik, mis. `expense_transportasi_bensin_bbm`).
+  `lib/core/db/database.dart`: `onCreate` kini `createAll()` lalu
+  `seedCategories(this)` (seed hanya jalan saat DB pertama dibuat).
+  `test/core/db/category_seed_test.dart`: induk expense & income
+  ter-seed, relasi `parentId` benar (Bensin/BBM → Transportasi), id
+  unik.
+- **Insiden kecil saat commit:** hook `pre-commit` lefthook (test)
+  menolak commit pertama — `database_test.dart` (T-010) mengasumsikan
+  DB kosong (`hasLength(2)`), padahal sekarang ter-seed 73 baris.
+  Fix: assertion diganti `containsAll(['cat_transport', 'cat_bensin'])`
+  supaya tidak bergantung jumlah baris seed. Hook tidak di-bypass.
+- **Pelajaran:** test DB yang memakai `AppDatabase.forTesting` ikut
+  menjalankan `onCreate` (termasuk seed) — jangan assert jumlah total
+  baris tabel yang di-seed; assert baris yang di-insert sendiri.
+- Commit: `0ab4b97` — `feat(db): seed taksonomi kategori saat database
+  dibuat (T-011)`; sudah di-push ke `origin/main`.
+- Tidak ada keputusan baru → tidak perlu ADR baru.
+- **Next:** T-012 (repository transaksi sebagai pintu tunggal ke Drift,
+  R100.11).
 
 ### 2026-09-25 — T-010 ✓: Skema Drift Transaction & Category
 
